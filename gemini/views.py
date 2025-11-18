@@ -11,7 +11,8 @@ env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, 'ai_Assistant/.env'))
 
 environ.Env.read_env()
-API_KEY = env("GEMINI_API_KEY")
+API_KEY = "dsdsdsdsadas"
+# API_KEY = env("GEMINI_API_KEY")
 messages = {}
 
 

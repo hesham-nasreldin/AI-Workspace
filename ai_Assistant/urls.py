@@ -22,5 +22,6 @@ urlpatterns = [
     path("", include("auth.urls")),
     path("gemini/", include("gemini.urls")),
     path("notes/", include("notes.urls")),
-    path("ToDoList/", include("todolist.urls"))
+    path("ToDoList/", include("todolist.urls")),
+    path("authentication/", include("authentication.urls"))
 ]

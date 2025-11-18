@@ -25,7 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env()
 
-SECRET_KEY = env('SECRET_KEY')
+# SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = "django-insecure-replace-this-with-a-secure-key-in-production"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -36,6 +37,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "authentication.apps.AuthenticationConfig",
     "gemini.apps.GeminiConfig",
     "notes.apps.NotesConfig",
     "todolist.apps.TodolistConfig",
