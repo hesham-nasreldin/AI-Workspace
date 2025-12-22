@@ -3,28 +3,28 @@
   <head>
     <meta charset="UTF-8">
     <title>Todo-List</title>
-</head>
+  </head>
   <body>
     {% block navbar %}
       <a href="{% url 'dashboard' %}">dashboard</a>
-      <a href="{% url 'completed_todos' %}">completed_todos</a>
-      <a href="{% url 'home_page' %}">home_page</a>
-      <a href="{% url 'gemini_main' %}">gemini_main</a>
-      <a href="{% url 'user-logout' %}">user-logout</a>
+      <a href="{% url 'completed_todos' %}">Completed Todos</a>
+      <a href="{% url 'home_page' %}">Todo List</a>
+      <a href="{% url 'gemini_main' %}">Ai</a>
+      <a href="{% url 'notes_index' %}">Notes</a>
+      <a href="{% url 'user-logout' %}">Logout</a>
       <br>
     {% endblock navbar %}
-
-  {% block todolist %}
-  {% endblock todolist %}
-  {% block notes %}
-  {% endblock notes %}
-  {% block gemini %}
-  {% endblock gemini %}
-  {% block auth %}
-  {% endblock auth%}
-  {% block dashboard %}
-  {% endblock dashboard %}
-  {% block completed_todos %}
-  {% endblock completed_todos %}
+    {% block todolist %}
+    {% endblock todolist %}
+    {% block notes %}
+    {% endblock notes %}
+    {% block gemini %}
+    {% endblock gemini %}
+    {% block auth %}
+    {% endblock auth %}
+    {% block dashboard %}
+    {% endblock dashboard %}
+    {% block completed_todos %}
+    {% endblock completed_todos %}
   </body>
 </html>

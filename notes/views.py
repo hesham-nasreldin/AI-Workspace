@@ -5,7 +5,7 @@ from .models import Notes
 
 # Create your views here.
 @login_required(login_url="my-login")
-def index(request):
+def notes_index(request):
     if request.method == "POST":
         if "add" in request.POST:
             note_title = request.POST.get("title")
@@ -16,25 +16,25 @@ def index(request):
             for note in Notes.objects.all():
                 print(note.title, note.content)
 
-            redirect("index")
+            redirect("notes_index")
         if "delete" in request.POST:
             note_id = request.POST.get("delete")
             note = get_object_or_404(Notes, id=note_id)
             note.delete()
 
-            redirect("index")
+            redirect("notes_index")
 
-    context = {
-        "notes": Notes.objects.all()
-    }
+    context = {"notes": Notes.objects.all()}
     return render(request, template_name="notes/index.html", context=context)
+
+
 @login_required(login_url="my-login")
-def edit_note(request, note_id):
+async def edit_note(request, note_id):
     note = get_object_or_404(Notes, id=note_id)
 
     context = {
-        "note_title":note.title,
-        "note_content":note.content,
+        "note_title": note.title,
+        "note_content": note.content,
     }
     if request.method == "POST":
 
@@ -48,6 +48,6 @@ def edit_note(request, note_id):
 
             notes.save()
 
-            return redirect("index")
+            return redirect("notes_index")
 
     return render(request, "notes/edit.html", context=context)

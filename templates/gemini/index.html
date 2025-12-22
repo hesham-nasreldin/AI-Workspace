@@ -1,8 +1,11 @@
 {% extends 'navbar.html' %}
+
 {% block gemini %}
   <form method="post">
     {% csrf_token %}
+
     {% load markdown_extras %}
+
     <h1>Welcome...</h1>
     {% for message, answer in messages.items %}
       <div>{{ message }}</div>
@@ -13,4 +16,218 @@
     <input type="text" name="message" required>
     <button type="submit" name="send">Send</button>
   </form>
+{% endblock gemini %}
+
+.gemini-header p {
+color: var(--text-muted);
+margin: 0.5rem 0 0 0;
+}
+
+/* Chat Container */
+.chat-container {
+background: white;
+border-radius: 8px;
+padding: 1.5rem;
+margin-bottom: 1.5rem;
+box-shadow: var(--shadow);
+max-height: 500px;
+overflow-y: auto;
+display: flex;
+flex-direction: column;
+gap: 1.5rem;
+}
+
+.message {
+display: flex;
+flex-direction: column;
+gap: 0.5rem;
+}
+
+.message-label {
+font-weight: 600;
+color: var(--text);
+font-size: 0.95rem;
+}
+
+.message-text {
+background-color: #f5f7fa;
+border-left: 4px solid var(--primary);
+padding: 1rem;
+border-radius: 4px;
+color: var(--text);
+line-height: 1.6;
+}
+
+.answer {
+background-color: #e8f5e9;
+border-left: 4px solid var(--success);
+}
+
+.answer-text {
+background-color: #f1f5f0;
+border-left: 4px solid var(--success);
+padding: 1rem;
+border-radius: 4px;
+color: var(--text);
+line-height: 1.6;
+}
+
+/* Input Form */
+.input-form {
+background: white;
+border-radius: 8px;
+padding: 1.5rem;
+box-shadow: var(--shadow);
+}
+
+.form-group {
+display: flex;
+gap: 1rem;
+flex-wrap: wrap;
+}
+
+.form-group input[type="text"] {
+flex: 1;
+min-width: 250px;
+padding: 0.875rem;
+border: 2px solid var(--border);
+border-radius: 6px;
+font-family: inherit;
+font-size: 1rem;
+transition: var(--transition);
+}
+
+.form-group input[type="text"]:focus {
+outline: none;
+border-color: var(--primary);
+box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-group button[type="submit"] {
+padding: 0.875rem 2rem;
+background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+color: white;
+border: none;
+border-radius: 6px;
+font-weight: 600;
+cursor: pointer;
+font-size: 1rem;
+transition: var(--transition);
+white-space: nowrap;
+}
+
+.form-group button[type="submit"]:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.empty-state {
+text-align: center;
+padding: 3rem 2rem;
+background: white;
+border-radius: 8px;
+color: var(--text-muted);
+box-shadow: var(--shadow);
+}
+
+.empty-state-icon {
+font-size: 3.5rem;
+margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+color: var(--text);
+font-size: 1.5rem;
+margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+.gemini-header h1 {
+font-size: 2rem;
+}
+
+.chat-container {
+max-height: 400px;
+padding: 1rem;
+}
+
+.form-group {
+flex-direction: column;
+}
+
+.form-group input[type="text"],
+.form-group button[type="submit"] {
+width: 100%;
+min-width: unset;
+}
+
+.input-form {
+padding: 1rem;
+}
+}
+
+@media (max-width: 480px) {
+.gemini-header h1 {
+font-size: 1.75rem;
+}
+
+.chat-container {
+max-height: 300px;
+padding: 0.75rem;
+gap: 1rem;
+}
+
+.message-text,
+.answer-text {
+padding: 0.75rem;
+font-size: 0.95rem;
+}
+
+.message-label {
+font-size: 0.85rem;
+}
+}
+</style>
+
+<div class="gemini-container">
+  <div class="gemini-header">
+    <h1>🤖 AI Assistant</h1>
+    <p>Ask me anything and I'll help you!</p>
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+
+    {% load markdown_extras %}
+
+    {% if messages %}
+      <div class="chat-container">
+        {% for message, answer in messages.items %}
+          <div class="message">
+            <div class="message-label">💬 You:</div>
+            <div class="message-text">{{ message }}</div>
+          </div>
+          <div class="message">
+            <div class="message-label">🤖 AI:</div>
+            <div class="answer-text">{{ answer|markdown_safe }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-state-icon">💭</div>
+        <h3>Start a Conversation</h3>
+        <p>Send your first message to begin!</p>
+      </div>
+    {% endif %}
+
+    <div class="input-form">
+      <div class="form-group">
+        <input type="text" name="message" placeholder="Ask me anything..." required />
+        <button type="submit" name="send">📤 Send</button>
+      </div>
+    </div>
+  </form>
+</div>
+
 {% endblock gemini %}

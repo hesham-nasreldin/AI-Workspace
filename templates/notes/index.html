@@ -14,7 +14,7 @@
     {% for note in notes %}
       <hr>
       <button type="submit" name="delete" value="{{ note.id }}">Delete</button>
-      <a href="{% url 'edit' note.id %}">Edit</a>
+      <a href="{% url 'edit_notes' note.id %}">Edit</a>
       <details>
         <summary>{{ note.title }}</summary>
         <span>{{ note.content }}</span>
