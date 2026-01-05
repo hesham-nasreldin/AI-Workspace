@@ -1,23 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
+{% extends 'navbar.html' %}
+{% block todolist %}
     <title>Todo-List</title>
-  </head>
-  <body>
     <h1>Welcome</h1>
     <form method="post">
-      {% csrf_token %}
-      <label>
-        <input placeholder="Enter your todo name here:" type="text" name="todo">
-      </label>
-      <button type="submit" name="add">Add</button>
-      {% for todo_object in todos %}
-        <hr>
-        <span>{{ todo_object.todo }}</span>
-        <button name="delete" type="submit" value="{{ todo_object.id }}">Delete</button>
-        <a href="{% url 'edit' todo_object.id %}">Edit</a>
-      {% endfor %}
+        {% csrf_token %}
+        <label>
+            <input placeholder="Enter your todo name here:" type="text" name="todo">
+        </label>
+        <button type="submit" name="add">Add</button>
+        {% for todo_object in todos %}
+            {% if todo_object.completed == False %}
+                <hr>
+                <span>{{ todo_object.todo }}</span>
+                <button name="delete" type="submit" value="{{ todo_object.id }}">Delete</button>
+                <a href="{% url 'edit' todo_object.id %}">Edit</a>
+                <button name="done" value="{{ todo_object.id }}">Done</button>
+            {% endif %}
+        {% endfor %}
     </form>
-  </body>
-</html>
+{% endblock todolist %}

@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Notes
 
-#laptop code
+
 # Create your views here.
 @login_required(login_url="my-login")
 def index(request):
@@ -11,30 +11,29 @@ def index(request):
             note_title = request.POST.get("title")
             note_content = request.POST.get("content")
 
-            Notes.objects.create(title=note_title, content=note_content)
+            Notes.objects.create(title=note_title, content=note_content, user=request.user)
 
-            for note in Notes.objects.all():
-                print(note.title, note.content)
-
-            redirect("index")
+            redirect("notes_index")
         if "delete" in request.POST:
             note_id = request.POST.get("delete")
-            note = get_object_or_404(Notes, id=note_id)
+            note = get_object_or_404(Notes, id=note_id, user=request.user)
             note.delete()
 
-            redirect("index")
+            return redirect("notes_index")
 
     context = {
-        "notes": Notes.objects.all()
+        "notes": Notes.objects.filter(user=request.user)
     }
     return render(request, template_name="notes/index.html", context=context)
+
+
 @login_required(login_url="my-login")
 def edit_note(request, note_id):
-    note = get_object_or_404(Notes, id=note_id)
+    note = get_object_or_404(Notes, id=note_id, user=request.user)
 
     context = {
-        "note_title":note.title,
-        "note_content":note.content,
+        "note_title": note.title,
+        "note_content": note.content,
     }
     if request.method == "POST":
 
@@ -48,6 +47,6 @@ def edit_note(request, note_id):
 
             notes.save()
 
-            return redirect("index")
+            return redirect("notes_index")
 
     return render(request, "notes/edit.html", context=context)

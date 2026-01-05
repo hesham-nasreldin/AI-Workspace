@@ -25,7 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env()
 
-SECRET_KEY = env('SECRET_KEY')
+# SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = "django-insecure-whop=u@@ils-6yb-t+g091jnrz4r*o^_1k3h%ytl8l0%knqq4="
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

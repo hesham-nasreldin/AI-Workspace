@@ -1,4 +1,15 @@
-<html>
-    <h1>This is my dashboard</h1>
-    <a href="{% url 'user-logout' %}">Logout here</a>
-</html>
+{% extends 'navbar.html' %}
+{% block dashboard %}
+    <h1>Dashboard</h1>
+    <h2>Resent Tasks:</h2>
+    {% for todo in resent_todos %}
+        <p>{{ todo }}</p>
+        <hr>
+    {% endfor %}
+
+    <h1>Resent Notes:</h1>
+    {% for note in resent_notes %}
+        <p>{{ note.title }}</p>
+        <hr>
+    {% endfor %}
+{% endblock dashboard %}

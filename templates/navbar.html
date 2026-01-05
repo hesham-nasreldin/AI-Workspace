@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo-List</title>
+</head>
+<body>
+{% block navbar %}
+    <a href="{% url 'dashboard' %}">dashboard</a>
+    <a href="{% url 'home_page' %}">Todo List</a>
+    <a href="{% url 'notes_index' %}">Notes</a>
+    <a href="{% url 'user-logout' %}">Logout</a>
+    <a href="{% url 'completed-tasks' %}">Completed Tasks</a>
+    <br>
+{% endblock navbar %}
+{% block todolist %}
+{% endblock todolist %}
+{% block notes %}
+{% endblock notes %}
+{% block gemini %}
+{% endblock gemini %}
+{% block auth %}
+{% endblock auth %}
+{% block dashboard %}
+{% endblock dashboard %}
+{% block completed-tasks %}
+{% endblock completed-tasks %}
+</body>
+</html>

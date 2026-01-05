@@ -8,10 +8,12 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env = environ.Env()
-environ.Env.read_env(os.path.join(BASE_DIR, 'ai_Assistant/.env'))
+# environ.Env.read_env(os.path.join(BASE_DIR, 'ai_Assistant/.env'))
 
 environ.Env.read_env()
-API_KEY = env("GEMINI_API_KEY")
+# API_KEY = env("GEMINI_API_KEY")
+API_KEY = "my api key  "
+
 messages = {}
 
 

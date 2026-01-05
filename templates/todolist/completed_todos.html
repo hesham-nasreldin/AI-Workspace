@@ -1,0 +1,12 @@
+{% extends 'navbar.html' %}
+{% block completed-tasks %}
+    <title>Completed Tasks</title>
+    <form method="post">
+        {% csrf_token %}f
+        {% for todo in all_todos %}
+            <span>{{ todo }}</span>
+            <button name="undo" value="{{ todo.id }}">Undo</button>
+            <br>
+        {% endfor %}
+    </form>
+{% endblock completed-tasks %}
