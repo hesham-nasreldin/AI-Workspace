@@ -38,7 +38,7 @@ def index_todolist(request):
 
             return redirect("home_page")
     context = {
-        "todos": TodoList.objects.filter(user=request.user)
+        "todos": TodoList.objects.filter(user=request.user),
     }
 
     return render(request, template_name="todolist/index.html", context=context)

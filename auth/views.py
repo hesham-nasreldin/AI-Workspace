@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
-
-from todolist.models import TodoList
 from .forms import CreateUserForm, LoginForm
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
-
+from notes import models as notes
+from todolist import models as todolist
 
 # Create your views here.
 def homepage(request):
@@ -51,13 +50,13 @@ def my_login(request):
 
 @login_required(login_url="my-login")
 def dashboard(request):
-    from notes import models as notes
-    from todolist import models as todolist
-    resent_todos = todolist.TodoList.objects.filter(user=request.user, completed=False).order_by("-created_at")
-    resent_notes = notes.Notes.objects.filter(user=request.user).order_by("-created_at")
+    recent_todos = todolist.TodoList.objects.filter(user=request.user, completed=False).order_by("-created_at")
+    recent_notes = notes.Notes.objects.filter(user=request.user).order_by("-created_at")
     context = {
-        "resent_todos": resent_todos[:10],
-        "resent_notes": resent_notes[:10],
+        "recent_todos": recent_todos[:10],
+        "recent_notes": recent_notes[:10],
+        "recent_todos_count": recent_todos.count(),
+        "recent_notes_count": recent_notes.count(),
     }
     return render(request, "auth/dashboard.html", context=context)
 

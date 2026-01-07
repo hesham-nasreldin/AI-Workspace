@@ -1,14 +1,14 @@
 {% extends 'navbar.html' %}
 {% block dashboard %}
     <h1>Dashboard</h1>
-    <h2>Resent Tasks:</h2>
-    {% for todo in resent_todos %}
+    <h2>Recent Tasks {{ recent_todos_count }}:</h2>
+    {% for todo in recent_todos %}
         <p>{{ todo }}</p>
         <hr>
     {% endfor %}
 
-    <h1>Resent Notes:</h1>
-    {% for note in resent_notes %}
+    <h1>Recent Notes: {{ recent_notes_count }}</h1>
+    {% for note in recent_notes %}
         <p>{{ note.title }}</p>
         <hr>
     {% endfor %}
