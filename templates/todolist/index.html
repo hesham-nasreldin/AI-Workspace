@@ -1,25 +1,78 @@
 {% extends 'navbar.html' %}
+{% block title %}Tasks - AI Assistant{% endblock %}
 {% block todolist %}
-  <title>Todo-List</title>
-  <h1>Tasks</h1>
-  <form method="post">
-    {% csrf_token %}
-    <label>
-      <input placeholder="Enter your todo name here:" type="text" name="todo">
-    </label>
-    <button type="submit" name="add">Add</button>
-    <ol>
-      {% for todo_object in todos %}
-        {% if todo_object.completed == False %}
-          <li>
-            <hr>
-            <span>{{ todo_object.todo }}</span>
-            <button name="delete" type="submit" value="{{ todo_object.id }}">Delete</button>
-            <a href="{% url 'edit' todo_object.id %}">Edit</a>
-            <button name="done" value="{{ todo_object.id }}">Done</button>
-          </li>
-        {% endif %}
-      {% endfor %}
-      </ol>
-    </form>
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h2 fw-bold mb-1">
+        <i class="bi bi-list-check text-primary"></i> My Tasks
+      </h1>
+      <p class="text-muted">Manage your daily tasks and stay productive</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-9 col-xl-8 mx-auto">
+      <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+          <form method="post">
+            {% csrf_token %}
+            <div class="input-group input-group-lg">
+              <span class="input-group-text bg-white border-end-0">
+                <i class="bi bi-plus-circle text-primary"></i>
+              </span>
+              <input class="form-control border-start-0 ps-0" placeholder="What do you need to do?" type="text" name="todo" required>
+              <button class="btn btn-primary px-4 fw-semibold" type="submit" name="add">
+                <i class="bi bi-plus-lg me-1"></i>Add
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-bottom py-3">
+          <h5 class="mb-0 fw-semibold">
+            <i class="bi bi-clipboard-check text-primary me-2"></i>Active Tasks
+          </h5>
+        </div>
+        <div class="card-body p-0">
+          <form method="post">
+            {% csrf_token %}
+            {% if todos %}
+              <ul class="list-group list-group-flush">
+                {% for todo_object in todos %}
+                  {% if todo_object.completed == False %}
+                    <li class="list-group-item border-0 px-4 py-3">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center flex-grow-1">
+                          <i class="bi bi-circle text-primary me-3"></i>
+                          <span class="fs-6">{{ todo_object.todo }}</span>
+                        </div>
+                        <div class="btn-group btn-group-sm" role="group">
+                          <button class="btn btn-outline-success" name="done" value="{{ todo_object.id }}" title="Mark as done">
+                            <i class="bi bi-check-lg"></i>
+                          </button>
+                          <a href="{% url 'edit' todo_object.id %}" class="btn btn-outline-warning" title="Edit">
+                            <i class="bi bi-pencil"></i>
+                          </a>
+                          <button class="btn btn-outline-danger" name="delete" type="submit" value="{{ todo_object.id }}" title="Delete">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            {% else %}
+              <div class="text-center py-5">
+                <i class="bi bi-inbox display-1 text-muted opacity-50"></i>
+                <p class="text-muted mt-3 mb-0">No active tasks. Add one above to get started!</p>
+              </div>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock todolist %}

@@ -1,26 +1,102 @@
 {% extends 'navbar.html' %}
+{% block title %}Notes - AI Assistant{% endblock %}
 {% block notes %}
-    <title>Notes</title>
-    <h1>Notes</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label>
-            <input name="title" placeholder="Enter your title...">
-        </label>
-        <label>
-            <textarea name="content" placeholder="Add your notes here..."></textarea>
-        </label>
-        <button type="submit" name="add">Add</button>
-        <span>{{ notes.count }}</span>
-        {% for note in notes %}
-            <hr>
-            <button type="submit" name="delete" value="{{ note.id }}">Delete</button>
-            <a href="{% url 'edit_notes' note.id %}">Edit</a>
-            <details>
-                <summary>{{ note.title }}</summary>
-                <span>{{ note.content }}</span>
-            </details>
-            <span>{{ note.created_at|date:"d-m-Y H:i:s" }}</span>
-        {% endfor %}
-    </form>
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h1 class="h2 fw-bold mb-1">
+                        <i class="bi bi-journal-text text-primary"></i> My Notes
+                    </h1>
+                    <p class="text-muted">Capture your thoughts and ideas</p>
+                </div>
+                <span class="badge rounded-pill" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-size: 1rem; padding: 0.5rem 1rem;">
+                    {{ notes.count }} Note{{ notes.count|pluralize }}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-9 col-xl-8 mx-auto">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white border-bottom py-3">
+                    <h5 class="mb-0 fw-semibold">
+                        <i class="bi bi-plus-circle text-primary me-2"></i>Create New Note
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="title" class="form-label fw-semibold">
+                                <i class="bi bi-card-heading text-primary me-1"></i>Title
+                            </label>
+                            <input type="text" class="form-control form-control-lg" id="title" name="title" placeholder="Enter a title for your note" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="content" class="form-label fw-semibold">
+                                <i class="bi bi-text-paragraph text-primary me-1"></i>Content
+                            </label>
+                            <textarea class="form-control" id="content" name="content" rows="5" placeholder="Write your note here..." required></textarea>
+                        </div>
+                        <button type="submit" name="add" class="btn btn-primary px-4 fw-semibold">
+                            <i class="bi bi-plus-lg me-2"></i>Save Note
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                {% if notes %}
+                    <div class="row g-3">
+                        {% for note in notes %}
+                            <div class="col-12">
+                                <div class="card border-0 shadow-sm hover-shadow">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex justify-content-between align-items-start mb-3">
+                                            <h5 class="card-title mb-0 fw-bold">
+                                                <i class="bi bi-file-text text-primary me-2"></i>{{ note.title }}
+                                            </h5>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <a href="{% url 'edit_notes' note.id %}" class="btn btn-outline-warning" title="Edit">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <button type="submit" name="delete" value="{{ note.id }}" class="btn btn-outline-danger" title="Delete">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <p class="text-muted small mb-3">
+                                            <i class="bi bi-clock me-1"></i>{{ note.created_at|date:"F d, Y \a\t H:i" }}
+                                        </p>
+                                        <p class="card-text mb-0">{{ note.content }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body text-center py-5">
+                            <i class="bi bi-journal display-1 text-muted opacity-50"></i>
+                            <h5 class="mt-3 text-muted">No notes yet</h5>
+                            <p class="text-muted">Create your first note above to get started!</p>
+                        </div>
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .hover-shadow {
+            transition: all 0.3s ease;
+        }
+        .hover-shadow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+        }
+    </style>
 {% endblock notes %}
