@@ -1,0 +1,6 @@
+name = input("Name: ")
+currency = input("Currency: ")
+hours = float(input("Number of Hours: "))
+rate = float(input("Hourly Rate: "))
+print("-"*10)
+print(f"The Salary of {name.strip().title()} is {float(hours*rate)} {currency.strip().title()}")

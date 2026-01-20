@@ -1,0 +1,35 @@
+{% extends 'navbar.html' %}
+{% block title %}Completed Tasks - AI Assistant{% endblock %}
+{% block completed-tasks %}
+    <div class="row">
+        <div class="col-12">
+            <h1 class="h2 mb-4">Completed Tasks</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% if all_todos %}
+                            <ul class="list-group list-group-flush">
+                                {% for todo in all_todos %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span class="text-decoration-line-through text-muted">{{ todo }}</span>
+                                        <button class="btn btn-sm btn-outline-primary" name="undo" value="{{ todo.id }}">
+                                            <i class="bi bi-arrow-counterclockwise"></i> Undo
+                                        </button>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-muted text-center mb-0">No completed tasks yet.</p>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock completed-tasks %}

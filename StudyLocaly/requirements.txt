@@ -1,0 +1,15 @@
+asgiref
+Django
+django-environ
+sqlparse
+tzdata
+python-dotenv
+langchain
+langchain-community
+langchain-ollama
+pypdf
+langchain-google-genai
+langchain-classic
+transformers
+torch
+TensorFlow
