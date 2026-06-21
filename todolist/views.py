@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import TodoList
 from auth.forms import CreateUserForm
-
+from django.http import HttpResponse
 # Create your views here.
 print(CreateUserForm.Meta.model())
 
@@ -15,7 +15,11 @@ def index_todolist(request):
             print("add")
 
             todo = request.POST.get("todo")
-            TodoList.objects.create(todo=todo, user=request.user)
+            
+            if todo:
+                TodoList.objects.create(todo=todo, user=request.user)
+            else:
+                return HttpResponse("Empty Todo!")
 
             for item in TodoList.objects.filter(user=request.user):
                 print(item.todo)
