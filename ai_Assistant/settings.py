@@ -40,12 +40,13 @@ INSTALLED_APPS = [
     "gemini.apps.GeminiConfig",
     "notes.apps.NotesConfig",
     "todolist.apps.TodolistConfig",
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "sell.apps.SellConfig",
 ]
 
 MIDDLEWARE = [
